@@ -7,9 +7,9 @@ public class BankAccountFactory {
     private BankAccountNumberValidator accValidator;
     private BankAccountNumberGenerator bankAccountNumberGenerator;
 
-    public BankAccountFactory() {
+    public BankAccountFactory(BankAccountNumberGenerator generator) {
         this.accValidator = new BankAccountNumberValidator();
-        this.bankAccountNumberGenerator = new BankAccountNumberGenerator();
+        this.bankAccountNumberGenerator = generator;
     }
 
     public BankAccount createBankAccount(double balance, Owner owner, String bankAccountNumber){
@@ -20,17 +20,17 @@ public class BankAccountFactory {
     }
 
     public BankAccount createBankAccount(double balance, Owner owner){
-        String bankAccountNumber = this.bankAccountNumberGenerator.GenerateBankAccountNumber();
+        String bankAccountNumber = this.bankAccountNumberGenerator.generateBankAccountNumber();
         return new BankAccount(balance, owner, bankAccountNumber);
     }
 
     public StudentBankAccount createStudentBankAccount(double balance, Owner owner){
-        String bankAccountNumber = this.bankAccountNumberGenerator.GenerateBankAccountNumber();
+        String bankAccountNumber = this.bankAccountNumberGenerator.generateBankAccountNumber();
         return new StudentBankAccount(balance, owner, bankAccountNumber);
     }
 
     public SavingAccount createSavingBankAccount(double balance, Owner owner){
-        String bankAccountNumber = this.bankAccountNumberGenerator.GenerateBankAccountNumber();
+        String bankAccountNumber = this.bankAccountNumberGenerator.generateBankAccountNumber();
         return new SavingAccount(balance, owner, bankAccountNumber);
     }
 }

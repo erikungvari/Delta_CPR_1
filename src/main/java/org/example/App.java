@@ -5,6 +5,7 @@ import org.example.accounts.exceptions.NoMoneyOnAccountException;
 import org.example.people.Owner;
 import org.example.people.OwnerFactory;
 import org.example.accounts.BankAccountFactory;
+import org.example.accounts.BankAccountNumberGenerator;
 
 public class App {
     public void run() throws NoMoneyOnAccountException {
@@ -12,8 +13,9 @@ public class App {
     }
 
     void runBank() throws NoMoneyOnAccountException {
-        OwnerFactory ownerFactory = new OwnerFactory();
-        BankAccountFactory bankAccountFactory = new BankAccountFactory();
+        BankAccountNumberGenerator bankAccountNumberGenerator = new BankAccountNumberGenerator();
+        BankAccountFactory bankAccountFactory = new BankAccountFactory(bankAccountNumberGenerator);
+        OwnerFactory ownerFactory = new OwnerFactory(bankAccountNumberGenerator);
 
         Owner owner1 = ownerFactory.createOwner("Pepa", "Svacina", "485174865");
         Owner owner2 = ownerFactory.createOwner("Franta", "Nevida", "8946519846");
