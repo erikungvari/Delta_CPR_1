@@ -6,6 +6,8 @@ import org.example.people.Owner;
 import org.example.people.OwnerFactory;
 import org.example.accounts.BankAccountFactory;
 import org.example.accounts.BankAccountNumberGenerator;
+import org.example.people.PersonIDValidator;
+import org.example.print.AccountDetailPrinter;
 
 public class App {
     public void run() throws NoMoneyOnAccountException {
@@ -13,16 +15,15 @@ public class App {
     }
 
     void runBank() throws NoMoneyOnAccountException {
-        BankAccountNumberGenerator bankAccountNumberGenerator = new BankAccountNumberGenerator();
-        BankAccountFactory bankAccountFactory = new BankAccountFactory(bankAccountNumberGenerator);
-        OwnerFactory ownerFactory = new OwnerFactory(bankAccountNumberGenerator);
+        //services
+        DIContainer serviceContainer = new DIContainer();
 
-        Owner owner1 = ownerFactory.createOwner("Pepa", "Svacina", "485174865");
-        Owner owner2 = ownerFactory.createOwner("Franta", "Nevida", "8946519846");
-
-        BankAccount account1 = bankAccountFactory.createBankAccount(600, owner1);
-        BankAccount account2 = bankAccountFactory.createStudentBankAccount(1700, owner2);
-        BankAccount account3 = bankAccountFactory.createSavingBankAccount(500, owner1);
+        //DAOs
+        Owner owner1 = serviceContainer.getOwnerFactory().createOwner("Pepa", "Svacina", "485174865");
+        Owner owner2 = serviceContainer.getOwnerFactory().createOwner("Franta", "Nevida", "8946519846");
+        BankAccount account1 = serviceContainer.getBankAccountFactory().createBankAccount(600, owner1);
+        BankAccount account2 = serviceContainer.getBankAccountFactory().createStudentBankAccount(1700, owner2);
+        BankAccount account3 = serviceContainer.getBankAccountFactory().createSavingBankAccount(500, owner1);
 
 
         if(account2 instanceof StudentBankAccount){
@@ -34,10 +35,8 @@ public class App {
             System.out.println(interest);
         }
 
-        MoneyTransferService moneyTransferService = new MoneyTransferService();
-
-        moneyTransferService.transferMoneyBetweenAccounts(account1, account2, 100);
-
+        serviceContainer.getMoneyTransferService().transferMoneyBetweenAccounts(account1, account2, 100);
+        serviceContainer.getMoneyTransferService().depositMoney(account3, 450);
 
     }
 }

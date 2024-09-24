@@ -1,9 +1,20 @@
 package org.example.print;
 
 import org.example.accounts.BankAccount;
+import org.example.accounts.SavingAccount;
+import org.example.accounts.StudentBankAccount;
 
 public class AccountDetailPrinter {
     public void printDetail(BankAccount bankAccount) {
-        System.out.printf("Account owned by '%s %s', has currently balance of %.2f.\n", bankAccount.getOwner().getFirstname(), bankAccount.getOwner().getLastname(), bankAccount.getBalance());
+        System.out.println(this.getPrefix(bankAccount) + "Bank account balance: " + bankAccount.getBalance());
     }
+    private String getPrefix(BankAccount bankAccount){
+        if(bankAccount instanceof StudentBankAccount){
+            return "Student ";
+        } else if (bankAccount instanceof SavingAccount) {
+            return "Saving ";
+        }
+        return "";
+    }
+
 }
