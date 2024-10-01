@@ -1,16 +1,16 @@
 package org.example.accounts;
 
+import com.google.inject.Singleton;
+import com.google.inject.Inject;
 import org.example.people.Owner;
 
-
+@Singleton
 public class BankAccountFactory {
-    private BankAccountNumberValidator accValidator;
-    private AccountNumberGenerator bankAccountNumberGenerator;
 
-    public BankAccountFactory(AccountNumberGenerator generator) {
-        this.accValidator = new BankAccountNumberValidator();
-        this.bankAccountNumberGenerator = generator;
-    }
+    @Inject
+    private AccountNumberGenerator bankAccountNumberGenerator;
+    private BankAccountNumberValidator accValidator;
+
 
     public BankAccount createBankAccount(double balance, Owner owner, String bankAccountNumber){
         if(!this.accValidator.isAccountValid(bankAccountNumber)){
