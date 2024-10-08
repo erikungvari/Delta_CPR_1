@@ -1,18 +1,17 @@
 package org.example.accounts;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import org.example.accounts.exceptions.NoMoneyOnAccountException;
 import org.example.print.AccountDetailPrinter;
 
+@Singleton
 public class MoneyTransferService {
 
-    public TransferFeeCalculator transferFeeCalculator;
-    public AccountDetailPrinter accountDetailPrinter;
-
-    public MoneyTransferService(TransferFeeCalculator transferFeeCalculator, AccountDetailPrinter accountDetailPrinter) {
-        this.transferFeeCalculator = transferFeeCalculator;
-        this.accountDetailPrinter = accountDetailPrinter;
-    }
-
+    @Inject
+    private TransferFeeCalculator transferFeeCalculator;
+    @Inject
+    private AccountDetailPrinter accountDetailPrinter;
 
     public void depositMoney(BankAccount bankAccount, double amount) {
         double balance = bankAccount.getBalance();

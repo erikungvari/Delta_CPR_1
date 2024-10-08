@@ -2,7 +2,7 @@ package org.example.people;
 
 import com.google.gson.Gson;
 
-public class OwnerGsonPersonalizationService implements PersonSerializationService {
+public class OwnerGsonSerializationService implements PersonSerializationService {
 
     @Override
     public String serializeOwner(Owner owner) {

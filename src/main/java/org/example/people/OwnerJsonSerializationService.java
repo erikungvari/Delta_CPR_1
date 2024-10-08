@@ -1,6 +1,6 @@
 package org.example.people;
 
-public class OwnerJsonSerializationServie implements PersonSerializationService{
+public class OwnerJsonSerializationService implements PersonSerializationService{
     public String serializeOwner(Owner owner){
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("{");

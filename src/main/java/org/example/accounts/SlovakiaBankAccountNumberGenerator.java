@@ -7,6 +7,6 @@ public class SlovakiaBankAccountNumberGenerator implements AccountNumberGenerato
 
     @Override
     public String generateBankAccountNumber() {
-        return "An account from the land of drevokocurs";
+        return "An account from the land of drevokocurs and lesopeses";
     }
 }
