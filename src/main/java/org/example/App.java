@@ -30,6 +30,9 @@ public class App {
     @Inject
     private MoneyTransferService moneyTransferService;
 
+    @Inject
+    private AtmService atmService;
+
 
     void runBank() throws NoMoneyOnAccountException {
 
@@ -56,5 +59,7 @@ public class App {
         System.out.println(personSerializationService.serializeOwner(owner1));
         System.out.println(personSerializationService.serializeOwner(owner2));
 
+        atmService.withdrawMoney(account1, 350);
+        atmService.depositMoney(account1, 450);
     }
 }
