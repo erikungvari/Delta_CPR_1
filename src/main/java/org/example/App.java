@@ -33,16 +33,20 @@ public class App {
     @Inject
     private AtmService atmService;
 
+    @Inject
+    private BankAccountFacade bankAccountFacade;
+
 
     void runBank() throws NoMoneyOnAccountException {
 
         //DAOs
         Owner owner1 = ownerFactory.createOwner("Pepa", "Svacina", "485174865");
         Owner owner2 = ownerFactory.createOwner("Franta", "Nevida", "8946519846");
-        BankAccount account1 = bankAccountFactory.createBankAccount(600, owner1);
-        BankAccount account2 = bankAccountFactory.createStudentBankAccount(1700, owner2);
-        BankAccount account3 = bankAccountFactory.createSavingBankAccount(500, owner1);
+        BankAccount account1 = bankAccountFactory.createBankAccount(owner1, 600);
+        BankAccount account2 = bankAccountFactory.createStudentBankAccount(owner2, 1700);
+        BankAccount account3 = bankAccountFactory.createSavingBankAccount(owner1, 3960);
 
+        BankAccount account4 = bankAccountFacade.createBankAccount(owner2, 670);
 
         if(account2 instanceof StudentBankAccount){
             String expire = ((StudentBankAccount) account2).getStudentStudiesConfirmationExpire();
@@ -59,7 +63,6 @@ public class App {
         System.out.println(personSerializationService.serializeOwner(owner1));
         System.out.println(personSerializationService.serializeOwner(owner2));
 
-        atmService.withdrawMoney(account1, 350);
-        atmService.depositMoney(account1, 450);
+        atmService.withdrawMoney(account4.getCardNumber(account4.getCard()), 350);
     }
 }

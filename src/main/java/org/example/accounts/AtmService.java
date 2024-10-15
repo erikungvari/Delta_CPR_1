@@ -1,22 +1,25 @@
 package org.example.accounts;
-
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import org.example.accounts.exceptions.NoMoneyOnAccountException;
 
 @Singleton
 public class AtmService {
+    @Inject
+    GlobalCardStorage cardStorage;
+    @Inject
+    GlobalBankAccountStorage bankAccountStorage;
 
-    public void withdrawMoney(BankAccount bankAccount, double amount) throws NoMoneyOnAccountException {
-        if(bankAccount.getBalance() < amount){
-            throw new NoMoneyOnAccountException("No money bro");
-        }
+    public void withdrawMoney(String cardNumber, double amount) throws NoMoneyOnAccountException {
+        BankAccount bankAccount = cardStorage.getBankAccount(cardNumber);
         System.out.println("Balance before: " + bankAccount.getBalance());
         bankAccount.setBalance(bankAccount.getBalance()-amount);
-        System.out.println("Balance after: " + bankAccount.getBalance());
+        System.out.println("Balance After: " + bankAccount.getBalance());
     }
-    public void depositMoney(BankAccount bankAccount, double amount){
+    public void depositMoney(String cardNumber, double amount){
+        BankAccount bankAccount = cardStorage.getBankAccount(cardNumber);
         System.out.println("Balance before: " + bankAccount.getBalance());
         bankAccount.setBalance(bankAccount.getBalance()+amount);
-        System.out.println("Balance after: " + bankAccount.getBalance());
+        System.out.println("Balance After: " + bankAccount.getBalance());
     }
 }

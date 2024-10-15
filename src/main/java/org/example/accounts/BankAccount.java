@@ -37,10 +37,17 @@ public class BankAccount {
         this.balance = balance;
     }
 
-    public BankCard getCard(String bankCardNumber){
-        return cards.get(bankCardNumber);
+    public BankCard getCard(){
+        BankCard bankCard = null;
+        for(Map.Entry<String, BankCard> entry : cards.entrySet()){
+            bankCard = entry.getValue();
+        }
+        return bankCard;
     }
 
+    public String getCardNumber(BankCard bankCard){
+        return bankCard.getBankCardNumber();
+    }
 
     public void addCard(BankCard bankCard){
         cards.put(bankCard.getBankCardNumber(), bankCard);
