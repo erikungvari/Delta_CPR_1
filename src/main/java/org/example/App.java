@@ -2,7 +2,6 @@ package org.example;
 
 import com.google.inject.Inject;
 import org.example.accounts.*;
-import org.example.accounts.cards.BankCard;
 import org.example.accounts.cards.BankCardFactory;
 import org.example.accounts.exceptions.NoMoneyOnAccountException;
 import org.example.people.Owner;
@@ -42,9 +41,9 @@ public class App {
         //DAOs
         Owner owner1 = ownerFactory.createOwner("Pepa", "Svacina", "485174865");
         Owner owner2 = ownerFactory.createOwner("Franta", "Nevida", "8946519846");
-        BankAccount account1 = bankAccountFactory.createBankAccount(owner1, 600);
-        BankAccount account2 = bankAccountFactory.createStudentBankAccount(owner2, 1700);
-        BankAccount account3 = bankAccountFactory.createSavingBankAccount(owner1, 3960);
+        BankAccount account1 = bankAccountFacade.createBankAccount(owner1, 600);
+        BankAccount account2 = bankAccountFacade.createStudentBankAccount(owner2, 1700);
+        BankAccount account3 = bankAccountFacade.createSavingBankAccount(owner1, 3960);
 
         BankAccount account4 = bankAccountFacade.createBankAccount(owner2, 670);
 
@@ -63,6 +62,6 @@ public class App {
         System.out.println(personSerializationService.serializeOwner(owner1));
         System.out.println(personSerializationService.serializeOwner(owner2));
 
-        atmService.withdrawMoney(account4.getCardNumber(account4.getCard()), 350);
+        atmService.withdrawMoney(account4.getLastCard().getBankCardNumber(), 350);
     }
 }

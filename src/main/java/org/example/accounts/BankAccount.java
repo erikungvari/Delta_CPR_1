@@ -37,7 +37,7 @@ public class BankAccount {
         this.balance = balance;
     }
 
-    public BankCard getCard(){
+    public BankCard getLastCard(){
         BankCard bankCard = null;
         for(Map.Entry<String, BankCard> entry : cards.entrySet()){
             bankCard = entry.getValue();

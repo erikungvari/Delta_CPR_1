@@ -28,4 +28,20 @@ public class BankAccountFacade {
         globalCardStorage.addCard(card.getBankCardNumber(), account);
         return account;
     }
+    public StudentBankAccount createStudentBankAccount(Owner owner, double balance){
+        StudentBankAccount account = bankAccountFactory.createStudentBankAccount(owner, balance);
+        BankCard card = bankCardFactory.createBankCard();
+        account.addCard(card);
+        globalBankAccountStorage.addBankAccount(account);
+        globalCardStorage.addCard(card.getBankCardNumber(), account);
+        return account;
+    }
+    public SavingAccount createSavingBankAccount(Owner owner, double balance){
+        SavingAccount account = bankAccountFactory.createSavingBankAccount(owner, balance);
+        BankCard card = bankCardFactory.createBankCard();
+        account.addCard(card);
+        globalBankAccountStorage.addBankAccount(account);
+        globalCardStorage.addCard(card.getBankCardNumber(), account);
+        return account;
+    }
 }

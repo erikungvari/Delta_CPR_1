@@ -26,11 +26,7 @@ public class BankAccountFactory {
     }
 
     public BankAccount createBankAccount(Owner owner, double balance){
-        String bankAccountNumber = this.bankAccountNumberGenerator.generateBankAccountNumber();
-        BankCard bankCard = bankCardFactory.createBankCard();
-        BankAccount account = new BankAccount(balance, owner, bankAccountNumber);
-        account.addCard(bankCard);
-        return account;
+        return new BankAccount(balance, owner, this.bankAccountNumberGenerator.generateBankAccountNumber());
     }
 
     public StudentBankAccount createStudentBankAccount(double balance, Owner owner, String bankAccountNumber){
@@ -40,8 +36,7 @@ public class BankAccountFactory {
         return new StudentBankAccount(balance, owner, bankAccountNumber);
     }
     public StudentBankAccount createStudentBankAccount(Owner owner, double balance){
-        String bankAccountNumber = this.bankAccountNumberGenerator.generateBankAccountNumber();
-        return new StudentBankAccount(balance, owner, bankAccountNumber);
+        return new StudentBankAccount(balance, owner, this.bankAccountNumberGenerator.generateBankAccountNumber());
     }
     public SavingAccount createSavingBankAccount(double balance, Owner owner, String bankAccountNumber){
         if(!this.accValidator.isAccountValid(bankAccountNumber)){
@@ -50,7 +45,6 @@ public class BankAccountFactory {
         return new SavingAccount(balance, owner, bankAccountNumber);
     }
     public SavingAccount createSavingBankAccount(Owner owner, double balance){
-        String bankAccountNumber = this.bankAccountNumberGenerator.generateBankAccountNumber();
-        return new SavingAccount(balance, owner, bankAccountNumber);
+        return new SavingAccount(balance, owner, this.bankAccountNumberGenerator.generateBankAccountNumber());
     }
 }
