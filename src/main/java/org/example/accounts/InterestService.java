@@ -11,17 +11,19 @@ public class InterestService {
     @Inject
     private MoneyTransferService moneyTransferService;
 
+    @Inject
+    private InterestCalculator interestCalculator;
 
     public void interestAllAccounts(){
         for(BankAccount bankAccount : globalBankAccountStorage.bankAccountStorage){
-            double interestAmount = bankAccount.getInterest();
+            double interestAmount = interestCalculator.getInterest(bankAccount);
             moneyTransferService.depositMoney(bankAccount, interestAmount);
         }
     }
     public void interestSavingAccounts(){
         for(BankAccount bankAccount : globalBankAccountStorage.bankAccountStorage){
             if(bankAccount instanceof SavingAccount){
-                double interestAmount = bankAccount.getInterest();
+                double interestAmount = interestCalculator.getInterest(bankAccount);
                 moneyTransferService.depositMoney(bankAccount, interestAmount);
             }
         }

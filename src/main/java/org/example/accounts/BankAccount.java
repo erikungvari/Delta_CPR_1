@@ -55,8 +55,4 @@ public class BankAccount {
         cards.put(bankCard.getBankCardNumber(), bankCard);
     }
 
-    public double getInterest(){
-        return (this.getBalance()/100)*interestPercentage;
-    }
-
 }
