@@ -17,6 +17,8 @@ public class MoneyTransferService {
         double balance = bankAccount.getBalance();
         double newBalance = balance + amount;
 
+        accountDetailPrinter.printDetail(bankAccount);
+
         newBalance -= this.transferFeeCalculator.calculateTransferFee(amount);
 
         bankAccount.setBalance(newBalance);
@@ -26,6 +28,8 @@ public class MoneyTransferService {
     public void withdrawMoney(BankAccount bankAccount, double amount) {
         double balance = bankAccount.getBalance();
         double newBalance = balance - amount;
+
+        accountDetailPrinter.printDetail(bankAccount);
 
         newBalance += this.transferFeeCalculator.calculateTransferFee(amount);
 

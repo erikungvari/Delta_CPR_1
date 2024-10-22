@@ -9,17 +9,15 @@ public class AtmService {
     GlobalCardStorage cardStorage;
     @Inject
     GlobalBankAccountStorage bankAccountStorage;
+    @Inject
+    MoneyTransferService moneyTransferService;
 
     public void withdrawMoney(String cardNumber, double amount) throws NoMoneyOnAccountException {
         BankAccount bankAccount = cardStorage.getBankAccount(cardNumber);
-        System.out.println("Balance before: " + bankAccount.getBalance());
-        bankAccount.setBalance(bankAccount.getBalance()-amount);
-        System.out.println("Balance After: " + bankAccount.getBalance());
+        moneyTransferService.withdrawMoney(bankAccount, amount);
     }
     public void depositMoney(String cardNumber, double amount){
         BankAccount bankAccount = cardStorage.getBankAccount(cardNumber);
-        System.out.println("Balance before: " + bankAccount.getBalance());
-        bankAccount.setBalance(bankAccount.getBalance()+amount);
-        System.out.println("Balance After: " + bankAccount.getBalance());
+        moneyTransferService.depositMoney(bankAccount, amount);
     }
 }
