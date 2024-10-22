@@ -25,8 +25,11 @@ public class MoneyTransferService {
         accountDetailPrinter.printDetail(bankAccount);
     }
 
-    public void withdrawMoney(BankAccount bankAccount, double amount) {
+    public void withdrawMoney(BankAccount bankAccount, double amount) throws NoMoneyOnAccountException {
         double balance = bankAccount.getBalance();
+        if(balance < amount){
+            throw new NoMoneyOnAccountException("No money bro");
+        }
         double newBalance = balance - amount;
 
         accountDetailPrinter.printDetail(bankAccount);
