@@ -57,6 +57,7 @@ public class App {
 
         atmService.withdrawMoney(account4.getLastCard().getBankCardNumber(), 350);
 
+        System.out.println("Interesting: ");
         interestService.interestAllAccounts();
     }
 }

@@ -18,4 +18,12 @@ public class InterestService {
             moneyTransferService.depositMoney(bankAccount, interestAmount);
         }
     }
+    public void interestSavingAccounts(){
+        for(BankAccount bankAccount : globalBankAccountStorage.bankAccountStorage){
+            if(bankAccount instanceof SavingAccount){
+                double interestAmount = bankAccount.getInterest();
+                moneyTransferService.depositMoney(bankAccount, interestAmount);
+            }
+        }
+    }
 }
