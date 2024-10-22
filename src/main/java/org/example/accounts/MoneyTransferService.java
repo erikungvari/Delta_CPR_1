@@ -18,9 +18,6 @@ public class MoneyTransferService {
         double newBalance = balance + amount;
 
         accountDetailPrinter.printDetail(bankAccount);
-
-        newBalance -= this.transferFeeCalculator.calculateTransferFee(amount);
-
         bankAccount.setBalance(newBalance);
         accountDetailPrinter.printDetail(bankAccount);
     }
@@ -33,9 +30,6 @@ public class MoneyTransferService {
         double newBalance = balance - amount;
 
         accountDetailPrinter.printDetail(bankAccount);
-
-        newBalance += this.transferFeeCalculator.calculateTransferFee(amount);
-
         bankAccount.setBalance(newBalance);
         accountDetailPrinter.printDetail(bankAccount);
     }

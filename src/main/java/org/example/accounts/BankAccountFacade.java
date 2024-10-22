@@ -4,21 +4,23 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import org.example.accounts.cards.BankCard;
 import org.example.accounts.cards.BankCardFactory;
+import org.example.accounts.cards.BankCardNumberGenerator;
+import org.example.accounts.cards.BankCardPINGenerator;
 import org.example.people.Owner;
 
 @Singleton
 public class BankAccountFacade {
     @Inject
-    BankAccountFactory bankAccountFactory;
+    private BankAccountFactory bankAccountFactory;
 
     @Inject
-    BankCardFactory bankCardFactory;
+    private BankCardFactory bankCardFactory;
 
     @Inject
-    GlobalBankAccountStorage globalBankAccountStorage;
+    private GlobalBankAccountStorage globalBankAccountStorage;
 
     @Inject
-    GlobalCardStorage globalCardStorage;
+    private GlobalCardStorage globalCardStorage;
 
     public BankAccount createBankAccount(Owner owner, double balance){
         BankAccount account = bankAccountFactory.createBankAccount(owner, balance);
@@ -43,5 +45,10 @@ public class BankAccountFacade {
         globalBankAccountStorage.addBankAccount(account);
         globalCardStorage.addCard(card.getBankCardNumber(), account);
         return account;
+    }
+    public BankCard createBankCard(BankAccount bankAccount){
+        BankCard bankCard = bankCardFactory.createBankCard();
+        globalCardStorage.addCard(bankCard.getBankCardNumber(),bankAccount);
+        return bankCard;
     }
 }

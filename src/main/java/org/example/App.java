@@ -2,7 +2,6 @@ package org.example;
 
 import com.google.inject.Inject;
 import org.example.accounts.*;
-import org.example.accounts.cards.BankCardFactory;
 import org.example.accounts.exceptions.NoMoneyOnAccountException;
 import org.example.people.Owner;
 import org.example.people.OwnerFactory;
@@ -21,12 +20,6 @@ public class App {
     private OwnerFactory ownerFactory;
 
     @Inject
-    private BankAccountFactory bankAccountFactory;
-
-    @Inject
-    private BankCardFactory bankCardFactory;
-
-    @Inject
     private MoneyTransferService moneyTransferService;
 
     @Inject
@@ -35,6 +28,8 @@ public class App {
     @Inject
     private BankAccountFacade bankAccountFacade;
 
+    @Inject
+    private InterestService interestService;
 
     void runBank() throws NoMoneyOnAccountException {
 
@@ -46,15 +41,13 @@ public class App {
         BankAccount account3 = bankAccountFacade.createSavingBankAccount(owner1, 3960);
 
         BankAccount account4 = bankAccountFacade.createBankAccount(owner2, 670);
+        account4.addCard(bankAccountFacade.createBankCard(account4));
 
         if(account2 instanceof StudentBankAccount){
             String expire = ((StudentBankAccount) account2).getStudentStudiesConfirmationExpire();
             System.out.println(expire);
         }
-        if(account3 instanceof Interesting){
-            double interest = ((Interesting)account3).GetInterest();
-            System.out.println(interest);
-        }
+
 
         moneyTransferService.transferMoneyBetweenAccounts(account1, account2, 100);
         moneyTransferService.depositMoney(account3, 450);
@@ -63,5 +56,7 @@ public class App {
         System.out.println(personSerializationService.serializeOwner(owner2));
 
         atmService.withdrawMoney(account4.getLastCard().getBankCardNumber(), 350);
+
+        interestService.interestAllAccounts();
     }
 }

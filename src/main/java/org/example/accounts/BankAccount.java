@@ -13,6 +13,8 @@ public class BankAccount {
 
     private String accountNumber;
 
+    private double interestPercentage = 5;
+
     private Map<String, BankCard> cards = new HashMap<>();
 
     public BankAccount(double balance, Owner owner, String accountNumber) {
@@ -53,5 +55,8 @@ public class BankAccount {
         cards.put(bankCard.getBankCardNumber(), bankCard);
     }
 
+    public double getInterest(){
+        return (this.getBalance()/100)*interestPercentage;
+    }
 
 }
