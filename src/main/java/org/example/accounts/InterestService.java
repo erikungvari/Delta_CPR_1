@@ -22,10 +22,11 @@ public class InterestService {
     }
     public void interestSavingAccounts(){
         for(BankAccount bankAccount : globalBankAccountStorage.bankAccountStorage){
-            if(bankAccount instanceof SavingAccount){
-                double interestAmount = interestCalculator.getInterest(bankAccount);
-                moneyTransferService.depositMoney(bankAccount, interestAmount);
+            if(!(bankAccount instanceof Interesting)){
+                continue;
             }
+            double interestAmount = interestCalculator.getInterest(bankAccount);
+            moneyTransferService.depositMoney(bankAccount, interestAmount);
         }
     }
 }
