@@ -47,4 +47,7 @@ public class BankAccountFactory {
     public SavingAccount createSavingBankAccount(Owner owner, double balance){
         return new SavingAccount(balance, owner, this.bankAccountNumberGenerator.generateBankAccountNumber());
     }
+    public InvestingAccount createInvestingAccount(Owner owner, double balance){
+        return new InvestingAccount(balance, owner, this.bankAccountNumberGenerator.generateBankAccountNumber());
+    }
 }

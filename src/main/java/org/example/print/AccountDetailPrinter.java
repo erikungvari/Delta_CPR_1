@@ -1,8 +1,8 @@
 package org.example.print;
 
-import org.example.accounts.BankAccount;
-import org.example.accounts.SavingAccount;
-import org.example.accounts.StudentBankAccount;
+import org.example.accounts.*;
+
+import java.util.Map;
 
 public class AccountDetailPrinter {
     public void printDetail(BankAccount bankAccount) {
@@ -16,5 +16,10 @@ public class AccountDetailPrinter {
         }
         return "";
     }
-
+    public void printInvesting(InvestingAccount account){
+        for(Map.Entry<String, Share> entry : account.getShares().entrySet()){
+            Share share = entry.getValue();
+            System.out.println(entry.getKey() + ": " + share.getBalance());
+        }
+    }
 }

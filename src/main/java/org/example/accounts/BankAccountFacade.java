@@ -46,6 +46,14 @@ public class BankAccountFacade {
         globalCardStorage.addCard(card.getBankCardNumber(), account);
         return account;
     }
+    public InvestingAccount createInvestingBankAccount(Owner owner, double balance){
+        InvestingAccount account = bankAccountFactory.createInvestingAccount(owner, balance);
+        BankCard card = bankCardFactory.createBankCard();
+        account.addCard(card);
+        globalBankAccountStorage.addBankAccount(account);
+        globalCardStorage.addCard(card.getBankCardNumber(), account);
+        return account;
+    }
     public BankCard createBankCard(BankAccount bankAccount){
         BankCard bankCard = bankCardFactory.createBankCard();
         globalCardStorage.addCard(bankCard.getBankCardNumber(),bankAccount);

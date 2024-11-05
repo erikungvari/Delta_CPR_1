@@ -6,6 +6,7 @@ import org.example.accounts.exceptions.NoMoneyOnAccountException;
 import org.example.people.Owner;
 import org.example.people.OwnerFactory;
 import org.example.people.PersonSerializationService;
+import org.example.print.AccountDetailPrinter;
 
 
 public class App {
@@ -31,6 +32,9 @@ public class App {
     @Inject
     private InterestService interestService;
 
+    @Inject
+    private DividendService dividendService;
+
     void runBank() throws NoMoneyOnAccountException {
 
         //DAOs
@@ -41,6 +45,8 @@ public class App {
         BankAccount account3 = bankAccountFacade.createSavingBankAccount(owner1, 3960);
 
         BankAccount account4 = bankAccountFacade.createBankAccount(owner2, 670);
+        BankAccount account5 = bankAccountFacade.createInvestingBankAccount(owner1, 0);
+
         account4.addCard(bankAccountFacade.createBankCard(account4));
 
         if(account2 instanceof StudentBankAccount){
@@ -59,5 +65,9 @@ public class App {
 
         System.out.println("Interesting: ");
         interestService.interestAllAccounts();
+
+        System.out.println("Investing: ");
+        moneyTransferService.invest((InvestingAccount) account5, 2000);
+        dividendService.getDividends((InvestingAccount) account5);
     }
 }
