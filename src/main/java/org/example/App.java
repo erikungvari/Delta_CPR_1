@@ -6,8 +6,6 @@ import org.example.accounts.exceptions.NoMoneyOnAccountException;
 import org.example.people.Owner;
 import org.example.people.OwnerFactory;
 import org.example.people.PersonSerializationService;
-import org.example.print.AccountDetailPrinter;
-
 
 public class App {
     public void run() throws NoMoneyOnAccountException {

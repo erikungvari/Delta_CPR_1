@@ -2,9 +2,9 @@ package org.example.accounts;
 
 import com.google.inject.Singleton;
 import com.google.inject.Inject;
-import org.example.accounts.cards.BankCard;
 import org.example.accounts.cards.BankCardFactory;
 import org.example.people.Owner;
+
 import java.util.Map;
 
 @Singleton
@@ -47,7 +47,7 @@ public class BankAccountFactory {
     public SavingAccount createSavingBankAccount(Owner owner, double balance){
         return new SavingAccount(balance, owner, this.bankAccountNumberGenerator.generateBankAccountNumber());
     }
-    public InvestingAccount createInvestingAccount(Owner owner, double balance){
-        return new InvestingAccount(balance, owner, this.bankAccountNumberGenerator.generateBankAccountNumber());
+    public InvestingAccount createInvestingAccount(Owner owner, double balance, Map<String, Share> shares){
+        return new InvestingAccount(balance, owner, shares, this.bankAccountNumberGenerator.generateBankAccountNumber());
     }
 }

@@ -8,6 +8,9 @@ import org.example.accounts.cards.BankCardNumberGenerator;
 import org.example.accounts.cards.BankCardPINGenerator;
 import org.example.people.Owner;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Singleton
 public class BankAccountFacade {
     @Inject
@@ -21,6 +24,9 @@ public class BankAccountFacade {
 
     @Inject
     private GlobalCardStorage globalCardStorage;
+
+    @Inject
+    private ShareFactory shareFactory;
 
     public BankAccount createBankAccount(Owner owner, double balance){
         BankAccount account = bankAccountFactory.createBankAccount(owner, balance);
@@ -47,11 +53,12 @@ public class BankAccountFacade {
         return account;
     }
     public InvestingAccount createInvestingBankAccount(Owner owner, double balance){
-        InvestingAccount account = bankAccountFactory.createInvestingAccount(owner, balance);
-        BankCard card = bankCardFactory.createBankCard();
-        account.addCard(card);
+        Map<String, Share> shares = new HashMap<>();
+        shares.put("Samsung", shareFactory.createShare("Samsung", 30, 0, 2));
+        shares.put("Epic Games", shareFactory.createShare("Epic Games", 60, 0, 4));
+        shares.put("Meta", shareFactory.createShare("Meta", 10, 0, 1));
+        InvestingAccount account = bankAccountFactory.createInvestingAccount(owner, balance, shares);
         globalBankAccountStorage.addBankAccount(account);
-        globalCardStorage.addCard(card.getBankCardNumber(), account);
         return account;
     }
     public BankCard createBankCard(BankAccount bankAccount){
