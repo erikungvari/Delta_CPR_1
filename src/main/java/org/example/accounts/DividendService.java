@@ -8,6 +8,8 @@ import java.util.Map;
 public class DividendService {
     @Inject
     MoneyTransferService moneyTransferService;
+    @Inject
+    GlobalBankAccountStorage globalBankAccountStorage;
 
     public void getDividends(InvestingAccount account){
         double amount = 0;
@@ -16,5 +18,12 @@ public class DividendService {
             amount += share.getBalance()/100*share.getDividend();
         }
         moneyTransferService.invest(account, amount);
+    }
+    public void getDividends(){
+        for(BankAccount account : globalBankAccountStorage.bankAccountStorage){
+            if(account instanceof InvestingAccount){
+                getDividends((InvestingAccount) account);
+            }
+        }
     }
 }
