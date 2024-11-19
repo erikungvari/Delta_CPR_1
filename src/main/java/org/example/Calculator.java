@@ -7,7 +7,7 @@ public class Calculator implements Calc {
     }
 
     @Override
-    public double div(double a, double b) {
+    public double sub(double a, double b) {
         return a - b;
     }
 
@@ -17,7 +17,7 @@ public class Calculator implements Calc {
     }
 
     @Override
-    public double sub(double a, double b) {
+    public double div(double a, double b) {
         if(b == 0){
             throw new ArithmeticException("Division by zero");
         }
