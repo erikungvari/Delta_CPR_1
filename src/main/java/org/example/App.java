@@ -45,7 +45,6 @@ public class App {
         BankAccount account4 = bankAccountFacade.createBankAccount(owner2, 670);
         BankAccount account5 = bankAccountFacade.createInvestingBankAccount(owner1, 0);
 
-        account4.addCard(bankAccountFacade.createBankCard(account4));
 
         if(account2 instanceof StudentBankAccount){
             String expire = ((StudentBankAccount) account2).getStudentStudiesConfirmationExpire();
