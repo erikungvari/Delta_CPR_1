@@ -2,6 +2,8 @@ package org.example.accounts;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import org.example.accounts.exceptions.NoMoneyOnAccountException;
+import org.example.storage.GlobalBankAccountStorage;
+import org.example.storage.GlobalCardStorage;
 
 @Singleton
 public class AtmService {

@@ -2,6 +2,7 @@ package org.example.accounts;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import org.example.storage.GlobalBankAccountStorage;
 
 @Singleton
 public class InterestService {

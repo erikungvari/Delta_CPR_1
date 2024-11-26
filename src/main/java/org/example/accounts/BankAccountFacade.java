@@ -4,9 +4,9 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import org.example.accounts.cards.BankCard;
 import org.example.accounts.cards.BankCardFactory;
-import org.example.accounts.cards.BankCardNumberGenerator;
-import org.example.accounts.cards.BankCardPINGenerator;
 import org.example.people.Owner;
+import org.example.storage.GlobalBankAccountStorage;
+import org.example.storage.GlobalCardStorage;
 
 import java.util.HashMap;
 import java.util.Map;

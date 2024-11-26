@@ -4,8 +4,10 @@ import com.google.inject.Inject;
 import org.example.accounts.*;
 import org.example.accounts.exceptions.NoMoneyOnAccountException;
 import org.example.people.Owner;
+import org.example.people.OwnerFacade;
 import org.example.people.OwnerFactory;
 import org.example.people.PersonSerializationService;
+import org.example.serialization.BankSerializationService;
 
 public class App {
     public void run() throws NoMoneyOnAccountException {
@@ -17,6 +19,9 @@ public class App {
 
     @Inject
     private OwnerFactory ownerFactory;
+
+    @Inject
+    private OwnerFacade ownerFacade;
 
     @Inject
     private MoneyTransferService moneyTransferService;
@@ -33,11 +38,14 @@ public class App {
     @Inject
     private DividendService dividendService;
 
+    @Inject
+    private BankSerializationService bankSerializationService;
+
     void runBank() throws NoMoneyOnAccountException {
 
         //DAOs
-        Owner owner1 = ownerFactory.createOwner("Pepa", "Svacina", "485174865");
-        Owner owner2 = ownerFactory.createOwner("Franta", "Nevida", "8946519846");
+        Owner owner1 = ownerFacade.createOwner("Pepa", "Svacina", "485174865");
+        Owner owner2 = ownerFacade.createOwner("Franta", "Nevida", "8946519846");
         BankAccount account1 = bankAccountFacade.createBankAccount(owner1, 600);
         BankAccount account2 = bankAccountFacade.createStudentBankAccount(owner2, 1700);
         BankAccount account3 = bankAccountFacade.createSavingBankAccount(owner1, 3960);
@@ -45,6 +53,7 @@ public class App {
         BankAccount account4 = bankAccountFacade.createBankAccount(owner2, 670);
         BankAccount account5 = bankAccountFacade.createInvestingBankAccount(owner1, 0);
 
+        account4.addCard(bankAccountFacade.createBankCard(account4));
 
         if(account2 instanceof StudentBankAccount){
             String expire = ((StudentBankAccount) account2).getStudentStudiesConfirmationExpire();
@@ -66,5 +75,7 @@ public class App {
         System.out.println("Investing: ");
         moneyTransferService.invest((InvestingAccount) account5, 2000);
         dividendService.getDividends((InvestingAccount) account5);
+
+        bankSerializationService.serializeAndWriteToFile();
     }
 }

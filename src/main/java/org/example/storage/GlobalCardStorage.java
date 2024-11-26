@@ -1,6 +1,7 @@
-package org.example.accounts;
+package org.example.storage;
 
 import com.google.inject.Singleton;
+import org.example.accounts.BankAccount;
 
 import java.util.HashMap;
 import java.util.Map;
