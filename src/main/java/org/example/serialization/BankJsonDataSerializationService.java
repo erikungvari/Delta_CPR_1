@@ -13,7 +13,4 @@ public class BankJsonDataSerializationService {
     public String serializeBank(BankJsonData data) {
         return gson.toJson(data);
     }
-    public BankJsonData deserializeBank(String jsonBankData){
-        return this.gson.fromJson(jsonBankData, BankJsonData.class);
-    }
 }

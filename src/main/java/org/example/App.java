@@ -55,7 +55,7 @@ public class App {
 
     void runBank() throws NoMoneyOnAccountException, FileNotFoundException, IOException {
 
-        File file = new File("C:\\Programming\\CPR\\01_Lecture\\bank.json");
+        File file = new File(bankSerializationService.filePath);
         if(!file.exists()){
             //DAOs
             Owner owner1 = ownerFacade.createOwner("Pepa", "Svacina", "485174865");

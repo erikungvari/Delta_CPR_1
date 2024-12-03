@@ -30,6 +30,8 @@ public class BankSerializationService {
     @Inject
     private GlobalBankAccountStorage globalBankAccountStorage;
 
+    public static final String filePath = "bank.json";
+
     public String serialize() {
         BankJsonData data = bankJsonDataFacade.createBankJsonDataFromGlobalStorages();
 
@@ -39,11 +41,11 @@ public class BankSerializationService {
     public void serializeAndWriteToFile() {
         String data = serialize();
 
-        fileSystemStorage.write("bank.json", data);
+        fileSystemStorage.write(filePath, data);
     }
     public void loadDataFromFile(String path) throws FileNotFoundException {
         Gson gson = new Gson();
-        JsonReader reader = new JsonReader(new FileReader("bank.json"));
+        JsonReader reader = new JsonReader(new FileReader(filePath));
 
         Root root = gson.fromJson(reader, Root.class);
         List<Owner> owners = root.owners;
