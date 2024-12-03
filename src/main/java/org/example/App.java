@@ -7,10 +7,16 @@ import org.example.people.Owner;
 import org.example.people.OwnerFacade;
 import org.example.people.OwnerFactory;
 import org.example.people.PersonSerializationService;
+import org.example.serialization.BankJsonDataFacade;
 import org.example.serialization.BankSerializationService;
+import org.example.storage.GlobalOwnerStorage;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class App {
-    public void run() throws NoMoneyOnAccountException {
+    public void run() throws NoMoneyOnAccountException, IOException {
         runBank();
     }
 
@@ -41,41 +47,58 @@ public class App {
     @Inject
     private BankSerializationService bankSerializationService;
 
-    void runBank() throws NoMoneyOnAccountException {
+    @Inject
+    private BankJsonDataFacade bankJsonDataFacade;
 
-        //DAOs
-        Owner owner1 = ownerFacade.createOwner("Pepa", "Svacina", "485174865");
-        Owner owner2 = ownerFacade.createOwner("Franta", "Nevida", "8946519846");
-        BankAccount account1 = bankAccountFacade.createBankAccount(owner1, 600);
-        BankAccount account2 = bankAccountFacade.createStudentBankAccount(owner2, 1700);
-        BankAccount account3 = bankAccountFacade.createSavingBankAccount(owner1, 3960);
+    @Inject
+    private GlobalOwnerStorage globalOwnerStorage;
 
-        BankAccount account4 = bankAccountFacade.createBankAccount(owner2, 670);
-        BankAccount account5 = bankAccountFacade.createInvestingBankAccount(owner1, 0);
+    void runBank() throws NoMoneyOnAccountException, FileNotFoundException, IOException {
 
-        account4.addCard(bankAccountFacade.createBankCard(account4));
+        File file = new File("C:\\Programming\\CPR\\01_Lecture\\bank.json");
+        if(!file.exists()){
+            //DAOs
+            Owner owner1 = ownerFacade.createOwner("Pepa", "Svacina", "485174865");
+            Owner owner2 = ownerFacade.createOwner("Franta", "Nevida", "8946519846");
+            BankAccount account1 = bankAccountFacade.createBankAccount(owner1, 600);
+            BankAccount account2 = bankAccountFacade.createStudentBankAccount(owner2, 1700);
+            BankAccount account3 = bankAccountFacade.createSavingBankAccount(owner1, 3960);
 
-        if(account2 instanceof StudentBankAccount){
-            String expire = ((StudentBankAccount) account2).getStudentStudiesConfirmationExpire();
-            System.out.println(expire);
+            BankAccount account4 = bankAccountFacade.createBankAccount(owner2, 670);
+            BankAccount account5 = bankAccountFacade.createInvestingBankAccount(owner1, 0);
+
+            account4.addCard(bankAccountFacade.createBankCard(account4));
+            moneyTransferService.transferMoneyBetweenAccounts(account1, account2, 100);
+            moneyTransferService.depositMoney(account3, 450);
+
+            System.out.println(personSerializationService.serializeOwner(owner1));
+            System.out.println(personSerializationService.serializeOwner(owner2));
+
+            atmService.withdrawMoney(account4.getLastCard().getBankCardNumber(), 350);
+
+            System.out.println("Interesting: ");
+            interestService.interestAllAccounts();
+
+            System.out.println("Investing: ");
+            moneyTransferService.invest((InvestingAccount) account5, 2000);
+            dividendService.getDividends((InvestingAccount) account5);
+
+            bankSerializationService.serializeAndWriteToFile();
+        }
+        else{
+            bankSerializationService.loadDataFromFile(file.getPath());
+            System.out.println("Interesting: ");
+            for(Owner owner : globalOwnerStorage.getOwnerStorage()){
+                System.out.println(personSerializationService.serializeOwner(owner));
+            }
+            interestService.interestAllAccounts();
+
+
+            bankSerializationService.serializeAndWriteToFile();
         }
 
 
-        moneyTransferService.transferMoneyBetweenAccounts(account1, account2, 100);
-        moneyTransferService.depositMoney(account3, 450);
 
-        System.out.println(personSerializationService.serializeOwner(owner1));
-        System.out.println(personSerializationService.serializeOwner(owner2));
 
-        atmService.withdrawMoney(account4.getLastCard().getBankCardNumber(), 350);
-
-        System.out.println("Interesting: ");
-        interestService.interestAllAccounts();
-
-        System.out.println("Investing: ");
-        moneyTransferService.invest((InvestingAccount) account5, 2000);
-        dividendService.getDividends((InvestingAccount) account5);
-
-        bankSerializationService.serializeAndWriteToFile();
     }
 }

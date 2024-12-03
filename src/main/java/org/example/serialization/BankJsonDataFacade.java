@@ -7,8 +7,8 @@ import org.example.people.Owner;
 import org.example.storage.GlobalBankAccountStorage;
 import org.example.storage.GlobalOwnerStorage;
 
+import java.io.FileNotFoundException;
 import java.util.List;
-import java.util.Map;
 
 @Singleton
 public class BankJsonDataFacade {
@@ -26,12 +26,7 @@ public class BankJsonDataFacade {
         return bankJsonData;
     }
 
-    public void createBankJsonDataFromJsonData(BankJsonData bankJsonData){
-        for(Owner owner : bankJsonData.getOwners()){
-            this.globalOwnerStorage.addOwner(owner);
-        }
-        for(BankAccount bankAccount : bankJsonData.getBankAccounts()){
-            this.globalBankAccountStorage.addBankAccount(bankAccount);
-        }
+    public void createBankJsonDataFromJsonData(BankJsonData bankJsonData) throws FileNotFoundException {
+
     }
 }
